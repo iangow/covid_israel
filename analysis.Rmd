@@ -61,3 +61,19 @@ merged_data <-
   inner_join(case_eff, by = "age_group") %>%
   inner_join(severe_eff, by = "age_group")
 ```
+
+# Effectiveness in reducing cases
+
+Effectiveness of vaccination with and without booster (`_partial`) against being unvaccinated.
+
+```{r}
+case_eff %>% select(-starts_with("case_rate")) %>% knitr::kable()
+```
+# Effectiveness in reducing severe cases
+
+Effectiveness of vaccination with and without booster  (`_partial`) against being unvaccinated.
+
+
+```{r}
+severe_eff %>% select(-starts_with("severe_rate")) %>% knitr::kable()
+```
