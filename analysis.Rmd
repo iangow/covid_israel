@@ -1,0 +1,63 @@
+
+
+```{r}
+library(readxl)
+library(dplyr, warn.conflicts = FALSE)
+library(tidyr)
+```
+
+## Getting the data
+
+
+
+```{r}
+t <- "israel_covid.xlsx"
+
+israel_covid_raw <- 
+  read_excel(t, skip = 1) %>%
+  select(1:10)
+
+names(israel_covid_raw) <- c("age_group",	
+                         "case_full", "case_partial", "case_unvax",
+                         "case100k_full", "case100k_partial", "case100k_unvax", 
+                         "severe_full", "severe_partial",	"severe_unvax")
+```
+
+```{r}
+israel_covid <- 
+  israel_covid_raw %>%
+  pivot_longer(cols = -"age_group") %>%
+  separate(name, into = c("outcome", "status"), sep = "_") %>%
+  pivot_wider(names_from = "outcome", values_from = "value",
+              values_fill = 0)  %>%
+  mutate(pop = round(case/case100k * 1e5))
+
+case_eff <- 
+  israel_covid %>%
+  mutate(case_rate = case/pop) %>%
+  select(age_group, status, case_rate) %>%
+  pivot_wider(names_from = "status", values_from = "case_rate", 
+              values_fill = 0, names_prefix = "case_rate_") %>%
+  mutate(case_risk_reduction = 1 - case_rate_full/case_rate_unvax,
+         case_risk_reduction_partial = 1 - case_rate_partial/case_rate_unvax)
+
+
+pop_data <-
+  israel_covid %>%
+  group_by(age_group) %>%
+  summarize(pop = sum(pop))
+
+severe_eff <-
+  israel_covid %>%
+  mutate(severe_rate = severe/pop) %>%
+  select(age_group, status, severe_rate) %>%
+  pivot_wider(names_from = "status", values_from = "severe_rate", 
+              values_fill = 0, names_prefix = "severe_rate_") %>%
+  mutate(severe_risk_reduction = 1 - severe_rate_full/severe_rate_unvax,
+         severe_risk_reduction_partial = 1 - severe_rate_partial/severe_rate_unvax)
+
+merged_data <-
+  pop_data %>%
+  inner_join(case_eff, by = "age_group") %>%
+  inner_join(severe_eff, by = "age_group")
+```
