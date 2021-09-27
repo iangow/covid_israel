@@ -1,4 +1,9 @@
+---
+title: "Covid vaccine effectivenss: Analysis of Israeli data"
+output: github_document
+---
 
+This analysis is inspired by and similar to that on [Jeffrey Morris's blog](https://www.covid-datascience.com/post/israeli-data-how-can-efficacy-vs-severe-disease-be-strong-when-60-of-hospitalized-are-vaccinated).
 
 ```{r}
 library(readxl)
