@@ -52,8 +52,9 @@ of the vaccine.
 
 ## Importing the data
 
-The following code reads in the data and rearranges it in a way that
-makes the analysis easier.
+The following code reads in the data from teh Excel spreadsheet and
+renames the variables using English variable names (the original data
+use Hebrew).
 
 ``` r
 t <- "israel_covid.xlsx"
@@ -67,6 +68,11 @@ names(israel_covid_raw) <- c("age_group",
                          "case100k_full", "case100k_partial", "case100k_unvax", 
                          "severe_full", "severe_partial",   "severe_unvax")
 ```
+
+The following code rearranges the imported data in a way that makes the
+analysis easier. Note that I calculate the implied number of people in
+each row by comparing the number of cases with the number of cases per
+100,000 people.
 
 ``` r
 israel_covid <- 
@@ -84,7 +90,8 @@ I calculate the risk reduction of, say, vaccination with booster by:
 
 1.  Dividing the case rate when, say, vaccinated with booster by the
     case rate when, say, unvaccinated (this measures the relative risk
-    of the two groups). We can denote this as *r*.
+    of the two groups). We can denote the result of this calculation as
+    *r*.
 2.  Subtracting the result of the previous step (*r*) from 1 (i.e.,
     1 − *r*).
 
