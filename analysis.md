@@ -12,6 +12,18 @@ library(tidyr)
 
 ## Getting the data
 
+This code uses data from Israel’s [Ministry of Health Covid
+Dashboard](https://datadashboard.health.gov.il/COVID-19/general). You
+can download the data by clicking the link indicated in the image below
+
+![here](webpage.png)
+
+The code below assumes that the downloaded file is in the same directory
+as the code (in turn assumed to be the working directory in R) and that
+it has been renamed `israel_covid.xlsx`.
+
+## Importing the data
+
 ``` r
 t <- "israel_covid.xlsx"
 

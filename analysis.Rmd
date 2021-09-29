@@ -5,6 +5,7 @@ output: github_document
 
 This analysis is inspired by and similar to that on [Jeffrey Morris's blog](https://www.covid-datascience.com/post/israeli-data-how-can-efficacy-vs-severe-disease-be-strong-when-60-of-hospitalized-are-vaccinated).
 
+
 ```{r}
 library(readxl)
 library(dplyr, warn.conflicts = FALSE)
@@ -13,7 +14,14 @@ library(tidyr)
 
 ## Getting the data
 
+This code uses data from Israel's [Ministry of Health Covid Dashboard](https://datadashboard.health.gov.il/COVID-19/general).
+You can download the data by clicking the link indicated in the image below
 
+![here](webpage.png)
+
+The code below assumes that the downloaded file is in the same directory as the code (in turn assumed to be the working directory in R) and that it has been renamed `israel_covid.xlsx`.
+
+## Importing the data
 
 ```{r}
 t <- "israel_covid.xlsx"
